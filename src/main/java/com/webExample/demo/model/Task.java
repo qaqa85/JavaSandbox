@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Getter @Setter
 @Table(name = "tasks")
-class Task {
+public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
