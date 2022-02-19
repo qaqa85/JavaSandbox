@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: local
+  jpa:
+    hibernate.ddl-auto: create-drop
+  main:
+    banner-mode: off
+server:
+  error:
+    include-message: always
+task.template.allowMultipleTasks: false
