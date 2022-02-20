@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.webExample.demo.model.Task;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -52,6 +53,16 @@ import java.util.List;
         }
         toUpdate.setId(id);
         repository.save(toUpdate);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Transactional
+    @PatchMapping("/tasks/{id}")
+    public ResponseEntity<?> toggleTask(@PathVariable int id) {
+        if (!repository.existsById(id)) {
+          return ResponseEntity.notFound().build();
+        }
+        repository.findById(id).ifPresent(task -> task.setDone(!task.isDone()));
         return ResponseEntity.noContent().build();
     }
 
