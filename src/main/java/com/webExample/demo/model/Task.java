@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter @Setter
 @Table(name = "tasks")
-public class Task extends BaseAuditableEntity{
+public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -20,6 +20,11 @@ public class Task extends BaseAuditableEntity{
     private String description;
     private boolean done;
     private LocalDateTime deadline;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(column = @Column(name = "updatedOn"), name = "updatedOn"),
+    })
+    private Audit audit = new Audit();
 
     public Task(String description, boolean done) {
         this.description = description;

@@ -1,16 +1,12 @@
 package com.webExample.demo.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Embeddable;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
 
-@MappedSuperclass
-@Getter @Setter
-class BaseAuditableEntity {
+@Embeddable
+class Audit {
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
 
