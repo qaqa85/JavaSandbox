@@ -1,6 +1,5 @@
 package com.webExample.demo.model;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -9,13 +8,20 @@ import java.util.Set;
 
 @Entity
 @Table(name = "TASK_GROUPS")
-@Getter @Setter @NoArgsConstructor
-class TaskGroup {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    private String description;
-    private boolean done;
+@Setter @NoArgsConstructor
+class TaskGroup extends BaseTask{
+    //FetchType.Lazy - fetch immediately
+    //FetchType.EAGER - fetch when getTasks is called
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "group")
     private Set<Task> tasks;
+
+    @Embedded
+    @AttributeOverrides ({
+            @AttributeOverride(column = @Column(name = "UPDATED_ON"), name = "updatedOn"),
+            @AttributeOverride(column = @Column(name = "CREATED_ON"), name = "createdOn")})
+    private Audit audit = new Audit();
+
+    Audit getAudit() {
+        return audit;
+    }
 }

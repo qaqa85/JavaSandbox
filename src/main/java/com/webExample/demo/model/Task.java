@@ -1,44 +1,37 @@
 package com.webExample.demo.model;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
-@Getter @Setter
+@Setter
 @Table(name = "tasks")
-public class Task {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @NotBlank(message = "Task's description must not be null")
-    private String description;
-    private boolean done;
-    private LocalDateTime deadline;
-    @ManyToOne
+public class Task extends BaseTask {
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "task_group_id")
     private TaskGroup group;
+
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(column = @Column(name = "updatedOn"), name = "updatedOn"),
-    })
+    @AttributeOverrides ({
+            @AttributeOverride(column = @Column(name = "UPDATED_ON"), name = "updatedOn"),
+            @AttributeOverride(column = @Column(name = "CREATED_ON"), name = "createdOn")})
     private Audit audit = new Audit();
 
-    public Task(String description, boolean done) {
-        this.description = description;
-        this.done = done;
+    Task(LocalDateTime deadline, TaskGroup group) {
+        this.deadline = deadline;
+        this.group = group;
     }
 
-    public  void updateFrom(final Task source) {
-        description = source.description;
-        done = source.done;
-        deadline = source.deadline;
-        group = source.group;
+    public TaskGroup getGroup() {
+        return group;
+    }
+
+    private Audit getAudit() {
+        return audit;
     }
 }
 

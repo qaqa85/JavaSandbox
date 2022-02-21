@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 
 @Embeddable
 class Audit {
-    private LocalDateTime createdOn;
-    private LocalDateTime updatedOn;
+    LocalDateTime createdOn;
+    LocalDateTime updatedOn;
 
     @PrePersist
     void prePersist() {
