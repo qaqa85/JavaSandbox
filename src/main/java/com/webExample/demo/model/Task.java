@@ -20,6 +20,9 @@ public class Task {
     private String description;
     private boolean done;
     private LocalDateTime deadline;
+    @ManyToOne
+    @JoinColumn(name = "task_group_id")
+    private TaskGroup group;
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(column = @Column(name = "updatedOn"), name = "updatedOn"),
@@ -35,6 +38,7 @@ public class Task {
         description = source.description;
         done = source.done;
         deadline = source.deadline;
+        group = source.group;
     }
 }
 
