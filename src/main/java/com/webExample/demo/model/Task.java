@@ -1,5 +1,6 @@
 package com.webExample.demo.model;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
-@Setter
+@Setter @Getter
 @Table(name = "tasks")
 public class Task extends BaseTask {
     @ManyToOne(cascade = CascadeType.ALL)
@@ -21,17 +22,9 @@ public class Task extends BaseTask {
             @AttributeOverride(column = @Column(name = "CREATED_ON"), name = "createdOn")})
     private Audit audit = new Audit();
 
-    Task(LocalDateTime deadline, TaskGroup group) {
+    public Task(LocalDateTime deadline, String description) {
         this.deadline = deadline;
-        this.group = group;
-    }
-
-    public TaskGroup getGroup() {
-        return group;
-    }
-
-    private Audit getAudit() {
-        return audit;
+        this.description = description;
     }
 }
 
