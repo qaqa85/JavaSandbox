@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter @Setter @NoArgsConstructor
 abstract class BaseTask {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
     protected LocalDateTime deadline;
 

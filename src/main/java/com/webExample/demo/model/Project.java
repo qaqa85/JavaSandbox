@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "projects")
 public class Project {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private int id;
     @NotBlank(message = "Project's description must not be empty")
