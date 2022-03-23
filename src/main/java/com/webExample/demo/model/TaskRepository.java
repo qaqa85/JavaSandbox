@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,8 @@ public interface TaskRepository {
 
     Optional<Task> findById(Integer id);
 
+    List<Task> findAllByGroup_Id(Integer groupId);
+
     boolean existsById(Integer id);
 
     List<Task> findByDone(@Param("state") boolean done);
@@ -21,4 +24,6 @@ public interface TaskRepository {
     Task save(Task entity);
 
     boolean existsByDoneIsFalseAndGroup_Id(Integer groupId);
+
+    List<Task> findAllByDoneIsFalseAndDeadlineIsLessThanEqualOrDoneIsFalseAndDeadlineIsNull(LocalDateTime dateTime);
 }

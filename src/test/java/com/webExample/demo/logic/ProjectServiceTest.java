@@ -198,6 +198,11 @@ class ProjectServiceTest {
                     .anyMatch(taskGroup -> taskGroup.getProject() != null
                             && taskGroup.getProject().getId() == projectId);
         }
+
+        @Override
+        public boolean existsById(int groupId) {
+            return map.containsKey(groupId);
+        }
     }
 }
 

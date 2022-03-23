@@ -5,6 +5,7 @@ import com.webExample.demo.model.*;
 import com.webExample.demo.model.projection.GroupReadModel;
 import com.webExample.demo.model.projection.GroupTaskWriteModel;
 import com.webExample.demo.model.projection.GroupWriteModel;
+import com.webExample.demo.model.projection.ProjectWriteModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -35,8 +36,8 @@ public class ProjectService {
         return repository.findAll();
     }
 
-    public Project createProject(Project source) {
-        return repository.save(source);
+    public Project createProject(ProjectWriteModel source) {
+        return repository.save(source.toProject());
     }
 
     public GroupReadModel createGroup(int projectId, LocalDateTime deadline) {
@@ -57,7 +58,7 @@ public class ProjectService {
                                      return task;
                                  }).collect(Collectors.toSet())
                  );
-                 return service.createGroup(targetGroup);
+                 return service.createGroup(targetGroup, project);
                 }).orElseThrow(() -> new IllegalArgumentException("Project with given id not found"));
         return result;
     }

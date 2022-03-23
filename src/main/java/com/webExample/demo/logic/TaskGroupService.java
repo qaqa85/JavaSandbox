@@ -1,14 +1,12 @@
 package com.webExample.demo.logic;
 
+import com.webExample.demo.model.Project;
 import com.webExample.demo.model.TaskGroup;
 import com.webExample.demo.model.TaskGroupRepository;
 import com.webExample.demo.model.TaskRepository;
 import com.webExample.demo.model.projection.GroupReadModel;
 import com.webExample.demo.model.projection.GroupWriteModel;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +22,11 @@ public class TaskGroupService {
     }
 
     public GroupReadModel createGroup(GroupWriteModel source) {
-        TaskGroup result = repository.save(source.toGroup());
+        return createGroup(source, null);
+    }
+
+    GroupReadModel createGroup(GroupWriteModel source, Project project) {
+        TaskGroup result = repository.save(source.toGroup(project));
         return new GroupReadModel(result);
     }
 
@@ -33,6 +35,10 @@ public class TaskGroupService {
                 .stream()
                 .map(GroupReadModel::new)
                 .collect(Collectors.toList());
+    }
+
+    public GroupReadModel readById(int groupId) {
+        return repository.findById(groupId).map(GroupReadModel::new).orElseThrow(() -> new IllegalArgumentException("Task with given id not found"));
     }
 
     public void toggleGroup(int groupId) {
