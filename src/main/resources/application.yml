@@ -2,7 +2,7 @@ spring:
   profiles:
     active: local
   jpa:
-    hibernate.ddl-auto: validate
+    hibernate.ddl-auto: create-drop
   main:
     banner-mode: off
 server:

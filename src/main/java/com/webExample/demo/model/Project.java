@@ -16,7 +16,7 @@ import java.util.Set;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
+    @Setter(AccessLevel.PUBLIC)
     private int id;
     @NotBlank(message = "Project's description must not be empty")
     private String description;
