@@ -203,6 +203,12 @@ class ProjectServiceTest {
         public boolean existsById(int groupId) {
             return map.containsKey(groupId);
         }
+
+        @Override
+        public boolean existsByDescription(String description) {
+            return map.values().stream()
+                    .anyMatch(group -> group.getDescription().equals(description));
+        }
     }
 }
 

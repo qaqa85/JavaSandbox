@@ -5,6 +5,7 @@ import com.webExample.demo.model.TaskRepository;
 import com.webExample.demo.model.projection.GroupTaskReadModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +21,13 @@ import java.util.concurrent.CompletableFuture;
 @RequestMapping("/tasks")
  class TaskController {
     public static final Logger logger = LoggerFactory.getLogger(TaskController.class);
+    public final ApplicationEventPublisher eventPublisher;
     private final TaskRepository repository;
     private final TaskService service;
 
     //@Qualifier("sqlTaskRepository") <- bean source if duplicated
-    public TaskController(TaskRepository repository, TaskService service) {
+    public TaskController(ApplicationEventPublisher eventPublisher, TaskRepository repository, TaskService service) {
+        this.eventPublisher = eventPublisher;
         this.repository = repository;
         this.service = service;
     }
@@ -82,7 +85,9 @@ import java.util.concurrent.CompletableFuture;
         if (!repository.existsById(id)) {
           return ResponseEntity.notFound().build();
         }
-        repository.findById(id).ifPresent(task -> task.setDone(!task.isDone()));
+        repository.findById(id)
+                .map(Task::toggle)
+                .ifPresent(eventPublisher::publishEvent);
         return ResponseEntity.noContent().build();
     }
 

@@ -1,12 +1,13 @@
 package com.webExample.demo.logic;
 
 import com.webExample.demo.TaskConfigurationProperties;
-import com.webExample.demo.model.*;
+import com.webExample.demo.model.Project;
+import com.webExample.demo.model.ProjectRepository;
+import com.webExample.demo.model.TaskGroupRepository;
 import com.webExample.demo.model.projection.GroupReadModel;
 import com.webExample.demo.model.projection.GroupTaskWriteModel;
 import com.webExample.demo.model.projection.GroupWriteModel;
 import com.webExample.demo.model.projection.ProjectWriteModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

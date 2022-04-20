@@ -1,5 +1,6 @@
 package com.webExample.demo.model;
 
+import com.webExample.demo.model.event.TaskEvent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
-@Setter @Getter
 @Table(name = "tasks")
 public class Task extends BaseTask {
     @ManyToOne(cascade = CascadeType.ALL)
@@ -32,6 +32,27 @@ public class Task extends BaseTask {
 
     public Task(LocalDateTime deadline, String description) {
         this(deadline, description, null);
+    }
+
+    public TaskGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(TaskGroup group) {
+        this.group = group;
+    }
+
+    public Audit getAudit() {
+        return audit;
+    }
+
+    public void setAudit(Audit audit) {
+        this.audit = audit;
+    }
+
+    public TaskEvent toggle() {
+        this.done = !this.done;
+        return TaskEvent.changed(this);
     }
 }
 

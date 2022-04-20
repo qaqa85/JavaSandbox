@@ -13,4 +13,6 @@ public interface TaskGroupRepository {
     boolean existsByDoneIsFalseAndProject_Id(int projectId);
 
     boolean existsById(int groupId);
+
+    boolean existsByDescription(String description);
 }
